@@ -17,6 +17,6 @@ class UsersRepositoryTest {
     void crud() {
         usersRepository.save(new Users());
 
-        System.out.println(">>>" + usersRepository.findAll());
+        usersRepository.findAll().forEach(System.out::println);
     }
 }
