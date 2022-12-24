@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import com.example.domain.Gender;
 import com.example.domain.Users;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -174,21 +177,62 @@ class UsersRepositoryTest {
         usersRepository.findAll(example).forEach(System.out::println);
     }
 
-
     @Test
-    void select() {
-        //usersRepository.findByName("cal").forEach(System.out::println);
-
-        System.out.println(usersRepository.findByName("cal"));
-    }
-
-    @Test
-    void select_getByEmailAndName() {
-        //System.out.println(usersRepository.getByEmailAndName("cal@gmail.com","cal"));
+    void queryMethodTest() {
+        System.out.println(usersRepository.getByEmailAndName("cal@gmail.com", "cal"));
         System.out.println(usersRepository.searchUsersByEmail("igor@gmail.com"));
 
+        usersRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(7L)).forEach(System.out::println);
 
+        usersRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)).forEach(System.out::println);
+
+        usersRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)).forEach(System.out::println);
+
+        usersRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now()).forEach(System.out::println);
+
+        usersRepository.findByIdBetween(3L, 5L).forEach(System.out::println);
+
+        usersRepository.findByIdIsNotNull().forEach(System.out::println);
+
+        usersRepository.findByNameIn(Lists.newArrayList("sopia", "cal", "igor"), PageRequest.of(0, 2, Sort.by(Sort.Order.desc("name")))).forEach(System.out::println);
+
+        usersRepository.findByNameIn(Lists.newArrayList("sopia", "cal", "igor"), PageRequest.of(1, 2, Sort.by(Sort.Order.desc("name")))).forEach(System.out::println);
     }
 
+
+    @Test
+    void updatableAndInsertableTest() {
+
+        Users users = Users.builder()
+                .name("jack")
+                .email("jack@gmail.com")
+                .build();
+
+        // insert
+        Users users2 = usersRepository.save(users);
+
+        System.out.println(users2);
+
+        users2.setName("jackson");
+
+        // id값이 존재하여 update
+        usersRepository.save(users2);
+
+        usersRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void enumTest() {
+        Users users = Users.builder()
+                .name("jack")
+                .email("jack@gmail.com")
+                .gender(Gender.MALE)
+                .build();
+
+        usersRepository.save(users);
+
+        usersRepository.findAll().forEach(System.out::println);
+
+    }
 
 }

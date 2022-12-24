@@ -8,7 +8,7 @@ insert into users (`name`, `email`, `created_at`, `updated_at`)
 values ('cal', 'cal@gmail.com', now(), now());
 
 insert into users (`name`, `email`, `created_at`, `updated_at`)
-values ('sepia', 'sepia@gmail.com', now(), now());
+values ('sopia', 'sepia@gmail.com', now(), now());
 
 insert into users (`name`, `email`, `created_at`, `updated_at`)
 values ('johnson', 'johnson@gmail.com', now(), now());

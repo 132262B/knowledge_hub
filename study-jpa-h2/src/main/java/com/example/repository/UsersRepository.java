@@ -2,9 +2,10 @@ package com.example.repository;
 
 import com.example.domain.Users;
 import lombok.NonNull;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,5 +21,21 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     Users searchUsersByEmail(@NonNull String email);
 
+    List<Users> findByCreatedAtAfter(LocalDateTime createdAt);
 
+    // 크다
+    List<Users> findByCreatedAtGreaterThan(LocalDateTime yesterday);
+
+    // 크거나 같다
+    List<Users> findByCreatedAtGreaterThanEqual(LocalDateTime yesterday);
+
+    // between 1
+    List<Users> findByCreatedAtBetween(LocalDateTime createdAt, LocalDateTime createdAt2);
+
+    // between2
+    List<Users> findByIdBetween(Long id1, Long id2);
+
+    List<Users> findByIdIsNotNull();
+
+    List<Users> findByNameIn(List<String> names, PageRequest name);
 }
