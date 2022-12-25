@@ -233,3 +233,90 @@ data를 insert할때 생성일,업데이트일 같이 자동적으로 넣어줘�
     }
 ```
 
+## 중복코드 문제점.
+
+하지만 이렇게 하는경우 ENTITY 마다 똑같은 코드를 작성해야하는 문제점이 생깁니다.
+
+이 문제를 __@EntityListeners__ 를 통해 중복코드 없이 개발할 수 있습니다.
+
+```java
+@EntityListeners(value = MyEntityListeners.class)
+@Entity
+public class Book implements Auditable {
+    // ... 생략
+}
+```
+
+```java
+public interface Auditable {
+
+    LocalDateTime getCreatedAt();
+
+    LocalDateTime getUpdatedAt();
+
+    void setCreatedAt(LocalDateTime createdAt);
+    void setUpdatedAt(LocalDateTime updatedAt);
+
+}
+```
+
+```java
+public class MyEntityListeners {
+
+    @PrePersist
+    public void prePersist(Object o) {
+        dateTimeInsertAndUpdate(o);
+    }
+
+    @PreUpdate
+    public void preUpdate(Object o) {
+        dateTimeInsertAndUpdate(o);
+    }
+
+    private void dateTimeInsertAndUpdate(Object o) {
+        if (o instanceof Auditable) {
+            ((Auditable) o).setCreatedAt(LocalDateTime.now());
+            ((Auditable) o).setUpdatedAt(LocalDateTime.now());
+        }
+    }
+}
+```
+
+## 하지만 윗부분은 스프링에서 제공해줌
+
+Application class에 __@EnableJpaAuditing__ 추가.
+
+생성일,업데이트 일이 필요한 Entity에 __@EntityListeners(value = AuditingEntityListener.class)__ 추가
+
+insert date 값은 __@CreatedDate__ , update date 값은 __@LastModifiedDate__  을 사용하여 처리하면 위 코드가 똑같이 작동됩니다.
+
+
+## 한번 더 반복코드를 줄임.
+
+__@MappedSuperclass__ 를 사용하면 한번 더 반복적인 코드를 줄일 수 있습니다.
+
+```java
+@Getter
+@Setter
+@ToString(callSuper = true)
+@MappedSuperclass
+@EntityListeners(value = AuditingEntityListener.class)
+public class BaseEntity {
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+}
+```
+
+와 같은 날짜만 관리하는 ENTITY를 생성 후 
+
+```java
+public class Book extends BaseEntity {}
+```
+와 같이 상속 해당 ENTITY를 상속받아 사용하게 되면 __BaseEntity__ 안에 선언된 createdAt, updatedAt에 대해 사용할 수 있습니다.
+
+
+

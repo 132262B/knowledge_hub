@@ -1,31 +1,30 @@
 package com.example.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Setter
+@Getter
 @ToString(callSuper = true)
+@Builder
 //@EntityListeners(value = AuditingEntityListener.class)
 @Entity
-//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-public class Users extends BaseEntity {
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
     private String name;
-    @NonNull
-    private String email;
 
-    @Enumerated(value = EnumType.STRING)
-    private Gender gender;
+    private String author;
 
 //    @Column(updatable = false)
 //    @CreatedDate
@@ -34,15 +33,4 @@ public class Users extends BaseEntity {
 //    @Column(insertable = false)
 //    @LastModifiedDate
 //    private LocalDateTime updatedAt;
-
-    @Transient
-    private String testData;
-
-//    @PrePersist
-//    public void PrePersist() {
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = LocalDateTime.now();
-//    }
-
-
 }
