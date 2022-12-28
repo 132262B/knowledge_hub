@@ -2,6 +2,7 @@ package com.example.repository;
 
 import com.example.domain.Gender;
 import com.example.domain.Users;
+import com.example.domain.UsersHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Column;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,9 @@ class UsersRepositoryTest {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private UsersHistoryRepository usersHistoryRepository;
 
     @Test
     void crud() {
@@ -232,6 +237,53 @@ class UsersRepositoryTest {
         usersRepository.save(users);
 
         usersRepository.findAll().forEach(System.out::println);
+
+    }
+
+    @Test
+    void usersRelationTest() {
+        Users user = Users.builder()
+                .email("132262b@gmail.com")
+                .name("junho")
+                .gender(Gender.MALE)
+                .build();
+
+        usersRepository.save(user);
+
+        user.setName("junhogu");
+
+        usersRepository.save(user);
+
+        user.setEmail("132262b@naver.com");
+
+        usersRepository.save(user);
+
+        List<UsersHistory> list = usersRepository.findById(6L)
+                .orElseThrow(RuntimeException::new)
+                .getUserHistories();
+
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void usersRelationTest2() {
+        Users user = Users.builder()
+                .email("132262b@gmail.com")
+                .name("junho")
+                .gender(Gender.MALE)
+                .build();
+
+        System.out.println(usersRepository.save(user));
+
+        user.setName("junhogu");
+
+        usersRepository.save(user);
+
+        user.setEmail("132262b@naver.com");
+
+        usersRepository.save(user);
+
+        usersHistoryRepository.findAll().forEach(System.out::println);
 
     }
 

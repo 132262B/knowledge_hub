@@ -26,6 +26,14 @@ public class Book extends BaseEntity {
 
     private String author;
 
+    private Long authorId;
+
+    private Long publisherId;
+
+    @OneToOne(mappedBy = "book")
+    @ToString.Exclude
+    private BookReviewInfo bookReviewInfo;
+
 //    @Column(updatable = false)
 //    @CreatedDate
 //    private LocalDateTime createdAt;

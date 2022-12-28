@@ -1,8 +1,11 @@
 package com.example.domain;
 
+import com.example.domain.listeners.UsersEntityListeners;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -10,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @ToString(callSuper = true)
-//@EntityListeners(value = AuditingEntityListener.class)
+@EntityListeners(value = UsersEntityListeners.class)
 @Entity
 //@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class Users extends BaseEntity {
@@ -27,22 +30,12 @@ public class Users extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-//    @Column(updatable = false)
-//    @CreatedDate
-//    private LocalDateTime createdAt;
-//
-//    @Column(insertable = false)
-//    @LastModifiedDate
-//    private LocalDateTime updatedAt;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    private List<UsersHistory> userHistories = new ArrayList<>();
 
     @Transient
     private String testData;
-
-//    @PrePersist
-//    public void PrePersist() {
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = LocalDateTime.now();
-//    }
 
 
 }

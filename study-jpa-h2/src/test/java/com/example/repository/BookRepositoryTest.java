@@ -18,6 +18,8 @@ class BookRepositoryTest {
         Book book = Book.builder()
                 .name("자바의 정석")
                 .author("남궁성")
+                .authorId(1L)
+                .publisherId(1L)
                 .build();
 
         bookRepository.save(book);
