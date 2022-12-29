@@ -319,4 +319,11 @@ public class Book extends BaseEntity {}
 와 같이 상속 해당 ENTITY를 상속받아 사용하게 되면 __BaseEntity__ 안에 선언된 createdAt, updatedAt에 대해 사용할 수 있습니다.
 
 
+# 영속성 컨텍스트(Persistence context)
+
+## 영속화란?
+영속성(persistence)은 데이터를 생성한 프로그램의 실행이 종료되더라도 사라지지 않는 데이터의 특성을 의미한다.
+
+영속성은 파일 또는 데이터베이스에 저장하여 구현 할 수 있다.
+
 
