@@ -27,6 +27,11 @@ public class Review extends BaseEntity {
     private float score;
 
     @ManyToOne
+    @ToString.Exclude
+    private Member member;
+
+    @ManyToOne
+    @ToString.Exclude
     private Book book;
 
 

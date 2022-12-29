@@ -14,13 +14,13 @@ import java.util.Objects;
 @Setter
 @Getter
 @Entity
-public class UsersHistory extends BaseEntity {
+public class MemberHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    // private Long memberId;
 
     private String name;
 
@@ -28,13 +28,13 @@ public class UsersHistory extends BaseEntity {
 
     @ToString.Exclude
     @ManyToOne
-    private Users Users;
+    private Member Member;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UsersHistory that = (UsersHistory) o;
+        MemberHistory that = (MemberHistory) o;
         return id != null && Objects.equals(id, that.id);
     }
 

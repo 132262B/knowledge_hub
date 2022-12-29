@@ -1,11 +1,10 @@
 package com.example.domain.listeners;
 
 
-import com.example.domain.Users;
-import com.example.domain.UsersHistory;
-import com.example.repository.UsersHistoryRepository;
+import com.example.domain.Member;
+import com.example.domain.MemberHistory;
+import com.example.repository.MemberHistoryRepository;
 import com.example.support.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -16,18 +15,18 @@ public class UsersEntityListeners {
     @PostPersist
     @PostUpdate
     public void postPersistAndPostUpdate(Object o) {
-        UsersHistoryRepository usersHistoryRepository = BeanUtils.getBean(UsersHistoryRepository.class);
+        MemberHistoryRepository usersHistoryRepository = BeanUtils.getBean(MemberHistoryRepository.class);
 
-        Users users = (Users) o;
+        Member member = (Member) o;
 
-        UsersHistory usersHistory = new UsersHistory();
+        MemberHistory memberHistory = new MemberHistory();
 
-        usersHistory.setName(users.getName());
-        usersHistory.setEmail(users.getEmail());
-        usersHistory.setUserId(users.getId());
-        usersHistory.setUsers(users);
+        memberHistory.setName(member.getName());
+        memberHistory.setEmail(member.getEmail());
+        //memberHistory.setUserId(member.getId());
+        memberHistory.setMember(member);
 
-        usersHistoryRepository.save(usersHistory);
+        usersHistoryRepository.save(memberHistory);
 
     }
 }

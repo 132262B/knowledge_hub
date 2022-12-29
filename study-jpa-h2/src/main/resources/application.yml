@@ -2,13 +2,20 @@ spring:
   h2:
     console:
       enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/jpa_study_book_manager?serverTimezone=Asia/Seoul&useSSL=false
+    username: root
+    password: 1234
+  sql:
+    init:
+      mode: always
   jpa:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
     properties:
       hibernate:
-        #dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         default_batch_fetch_size: 1000
         show_sql: true
         format_sql: true

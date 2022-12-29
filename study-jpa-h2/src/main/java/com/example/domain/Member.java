@@ -16,7 +16,7 @@ import java.util.List;
 @EntityListeners(value = UsersEntityListeners.class)
 @Entity
 //@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-public class Users extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,12 @@ public class Users extends BaseEntity {
     private Gender gender;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private List<UsersHistory> userHistories = new ArrayList<>();
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
+    private List<MemberHistory> memberHistories = new ArrayList<>();
 
-    @Transient
-    private String testData;
-
+    @OneToMany
+    @JoinColumn(name = "member_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 
 }

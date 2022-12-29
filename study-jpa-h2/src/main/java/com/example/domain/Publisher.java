@@ -1,10 +1,7 @@
 package com.example.domain;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -12,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
@@ -26,7 +25,7 @@ public class Publisher extends BaseEntity {
     private String name;
 
     @OneToMany
-    @JoinColumn(name = "publisherId")
+    @JoinColumn(name = "publisher_id")
     private List<Book> books = new ArrayList<>();
 
 
