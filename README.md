@@ -321,9 +321,50 @@ public class Book extends BaseEntity {}
 
 # 영속성 컨텍스트(Persistence context)
 
-## 영속화란?
+## 영속화이란?
 영속성(persistence)은 데이터를 생성한 프로그램의 실행이 종료되더라도 사라지지 않는 데이터의 특성을 의미한다.
 
 영속성은 파일 또는 데이터베이스에 저장하여 구현 할 수 있다.
 
+## EntityManager
+EntityManager는 JPA에서 정의하고 있는 Interface 이다. persist merge remove find 등등 정의되어있다. 그리고 구현체를 빈으로 등록하고 있기 때문에 Autowire를 이용해 사용할수 있다.
 
+```
+@SpringBootTest
+public class EntityManagerTest {
+
+    @Autowired
+    private EntityManager entityManager;
+
+    @Test
+    void entityManagerTest() {
+        System.out.println(entityManager.createQuery("select u from User u").getResultList()); // entityManager에서 직접 쿼리를 만들서 사용
+        // userRepository.findAll(); 이거와 같다.
+    }
+
+```
+
+## Entity 캐시
+
+1차 캐시는 영속성 컨텍스트 내부에 있다. 엔티티 매니저로 조회하거나 변경하는 모든 엔티티는 1차 캐시에 저장된다.
+
+트랜잭션을 커밋하거나 플러시를 호출하면 1차 캐시에 있는 엔티티의 변경 내역을 데이터베이스에 동기화한다.
+
+
+# 영속성 전이
+
+특정 엔티티를 영속 상태로 만들 때, 영관된 엔티티도 함께 영속 상태로 만드는 것이다
+
+CASCADE옵션을 사용하면 부모 엔티티를 저장할 때, 자식 ENITIY도 함께 저장이 가능하다.
+
+cascade 속성에 올 수 있는 값은 아래와 같다.
+* PERSIST : EntityManager#persist() 실행시 연관된 엔티티를 함께 영속 객체로 추가한다.
+* REMOVE : EntityManager#remove() 실행시 연관된 엔티티를 함께 삭제한다.
+* DETACH : EntityManager#detach() 실행시 연관된 엔티티를 함께 분리 상태로 만든다.
+* REFRESH : EntityManager#refresh() 실행시 연관된 엔티티를 함께 다시 읽어온다.
+* MERGE : EntityManager#merge() 실행시 연관된 엔티티도 함께 관리 상태로 바꾼다.
+* ALL : 모든 상태 변화에 대해 연관된 엔티티에 함께 적용한다.
+
+
+## cascade 와 orphanRemoval 차이
+[cascade 와 orphanRemoval 차이 - 우아한 테크코스 블로그](https://tecoble.techcourse.co.kr/post/2021-08-15-jpa-cascadetype-remove-vs-orphanremoval-true/)

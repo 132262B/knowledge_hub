@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import com.example.domain.converter.BookStatusConverter;
+import com.example.domain.dto.BookStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +45,9 @@ public class Book extends BaseEntity {
     @JoinColumn(name = "book_id")
     @ToString.Exclude
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
+
+    @Convert(converter = BookStatusConverter.class)
+    private BookStatus status;
 
     public void addBookAndAuthors(BookAndAuthor... bookAndAuthors) {
         this.bookAndAuthors.addAll(List.of(bookAndAuthors));

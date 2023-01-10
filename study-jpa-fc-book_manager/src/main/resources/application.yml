@@ -3,7 +3,7 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/jpa_study_book_manager?serverTimezone=Asia/Seoul&useSSL=false
+    url: jdbc:mysql://localhost:3306/jpa_study_book_manager?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 1234
   sql:
