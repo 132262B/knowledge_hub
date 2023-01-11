@@ -23,6 +23,8 @@ public class UsersEntityListeners {
 
         memberHistory.setName(member.getName());
         memberHistory.setEmail(member.getEmail());
+        memberHistory.setCompanyAddress(member.getCompanyAddress());
+        memberHistory.setHomeAddress(member.getHomeAddress());
         //memberHistory.setUserId(member.getId());
         memberHistory.setMember(member);
 

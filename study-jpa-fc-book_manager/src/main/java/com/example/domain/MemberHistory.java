@@ -30,6 +30,24 @@ public class MemberHistory extends BaseEntity {
     @ManyToOne
     private Member Member;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "home_city")),
+            @AttributeOverride(name = "district", column = @Column(name = "home_district")),
+            @AttributeOverride(name = "detail", column = @Column(name = "home_address_detatil")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "home_zip_code")),
+    })
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "company_city")),
+            @AttributeOverride(name = "district", column = @Column(name = "company_district")),
+            @AttributeOverride(name = "detail", column = @Column(name = "company_address_detatil")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "company_zip_code")),
+    })
+    private Address companyAddress;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

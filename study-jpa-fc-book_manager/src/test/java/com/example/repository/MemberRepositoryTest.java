@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import com.example.domain.Address;
 import com.example.domain.Gender;
 import com.example.domain.Member;
 import com.example.domain.MemberHistory;
@@ -240,6 +241,23 @@ class MemberRepositoryTest {
 
         memberHistoryRepository.findAll().forEach(System.out::println);
 
+    }
+
+    @Test
+    void embedTest() {
+
+        Member member = new Member();
+
+        member.setName("홍길동");
+        member.setHomeAddress(new Address("서울시","강남구","테헤란로234","12345"));
+        member.setCompanyAddress(new Address("부산","강서구","준호로","2352"));
+
+        memberRepository.save(member);
+
+        memberRepository.findAll().forEach(System.out::println);
+
+
+        memberHistoryRepository.findAll().forEach(System.out::println);
     }
 
 }

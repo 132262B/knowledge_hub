@@ -30,6 +30,24 @@ public class Member extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "home_city")),
+            @AttributeOverride(name = "district", column = @Column(name = "home_district")),
+            @AttributeOverride(name = "detail", column = @Column(name = "home_address_detatil")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "home_zip_code")),
+    })
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "company_city")),
+            @AttributeOverride(name = "district", column = @Column(name = "company_district")),
+            @AttributeOverride(name = "detail", column = @Column(name = "company_address_detatil")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "company_zip_code")),
+    })
+    private Address companyAddress;
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id", insertable = false, updatable = false)
     private List<MemberHistory> memberHistories = new ArrayList<>();
