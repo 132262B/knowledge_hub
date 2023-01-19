@@ -11,6 +11,8 @@ import jpabook.jpashop.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 public class OrderService {
@@ -58,8 +60,11 @@ public class OrderService {
     }
 
     // 검색
-//    public List<Order> findOrders() {
-//
-//    }
+    public List<Order> findOrders() {
+        return orderRepository.findAll();
+    }
 
+    public List<Order> findAndWithMemberDelivery() {
+        return orderRepository.findAndWithMemberDelivery();
+    }
 }
