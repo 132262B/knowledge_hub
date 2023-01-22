@@ -36,19 +36,19 @@ public class InitDb {
             em.persist(member);
 
             Book book1 = new Book();
-            book1.setName("JPA BOOK2");
+            book1.setName("JPA BOOK1");
             book1.setPrice(10000);
             book1.setStockQuantity(100);
             em.persist(book1);
 
             Book book2 = new Book();
             book2.setName("JPA BOOK2");
-            book2.setPrice(10000);
-            book2.setStockQuantity(100);
+            book2.setPrice(9900);
+            book2.setStockQuantity(220);
             em.persist(book2);
 
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
-            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 10000, 2);
+            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 9900, 2);
 
             Delivery delivery = new Delivery();
             delivery.setAddress(member.getAddress());
@@ -77,8 +77,8 @@ public class InitDb {
             book2.setStockQuantity(500);
             em.persist(book2);
 
-            OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 3);
-            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 10000, 4);
+            OrderItem orderItem1 = OrderItem.createOrderItem(book1, 20000, 3);
+            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 40000, 4);
 
             Delivery delivery = new Delivery();
             delivery.setAddress(member.getAddress());
