@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -41,12 +42,12 @@ public class MemberService {
     // 단건 회원조회
     @Transactional(readOnly = true)
     public Member findOne(Long memberId) {
-        return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
     }
 
     @Transactional
     public void update(Long id, String name) {
-        Member member = memberRepository.findOne(id);
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         member.setName(name);
     }
 }
