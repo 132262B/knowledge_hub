@@ -83,6 +83,54 @@ class MemberTest {
 
         // then
     }
+    
+    @Test
+    void Lock() {
+        // given
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
 
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        Member member1 = new Member("member1", 20, teamA);
+        Member member2 = new Member("member2", 21, teamA);
+        Member member3 = new Member("member3", 24, teamB);
+        Member member4 = new Member("member4", 22, teamB);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+        memberRepository.save(member4);
+
+        // when
+        memberRepository.findLockByUsername("member1").forEach(System.out::println);
+    }
+
+    @Test
+    void customMemberRepositoryTest() {
+        // given
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        Member member1 = new Member("member1", 20, teamA);
+        Member member2 = new Member("member2", 21, teamA);
+        Member member3 = new Member("member3", 24, teamB);
+        Member member4 = new Member("member4", 22, teamB);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+        memberRepository.save(member4);
+
+        // when
+
+        memberRepository.findMemberCustom().forEach(System.out::println);
+        
+        // then
+    }
 
 }
