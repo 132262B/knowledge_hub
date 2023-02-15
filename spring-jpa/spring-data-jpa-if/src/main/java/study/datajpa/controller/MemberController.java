@@ -9,6 +9,8 @@ import study.datajpa.entity.Member;
 import study.datajpa.repository.MemberRepository;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,9 +26,11 @@ public class MemberController {
 
     @PostConstruct
     public void init() {
+        List<Member> list = new ArrayList<>();
         for (int i=0; i<100; i++) {
-            memberRepository.save(new Member("member"+i, 20, null));
+            list.add(new Member("member"+i,20,null));
         }
+        memberRepository.saveAll(list);
     }
 
 }
