@@ -1,19 +1,22 @@
 package study.querydsl;
 
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import study.querydsl.dto.MemberDto;
+import study.querydsl.dto.QMemberDto;
 import study.querydsl.entity.Member;
-import study.querydsl.entity.QTeam;
+import study.querydsl.entity.QMember;
 import study.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
-import java.lang.reflect.WildcardType;
-import java.sql.SQLOutput;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -239,4 +242,90 @@ public class QueryDslBasicTest {
         System.out.println(findMember.getTeam());
     }
 
+    @Test
+    void subQuery() {
+
+        QMember memberSub = new QMember("memberSub");
+
+        Member one = query
+                .selectFrom(member)
+                .where(member.age.eq(
+                        JPAExpressions
+                                .select(memberSub.age.max())
+                                .from(memberSub)
+                ))
+                .fetchOne();
+
+        System.out.println(one);
+    }
+
+    @Test
+    void subQuery_in() {
+
+        QMember subMember = new QMember("subMember");
+
+        List<Member> memberList = query
+                .select(member)
+                .from(member)
+                .where(member.age.in(JPAExpressions
+                        .select(subMember.age)
+                        .from(subMember)
+                        .where(subMember.age.gt(10))
+                ))
+                .fetch();
+
+        memberList.forEach(System.out::println);
+    }
+
+    @Test
+    public void caseQuery() {
+        List<Tuple> fetch = query
+                .select(member.username, member.age.when(20).then("스무살").otherwise("기타"))
+                .from(member)
+                .fetch();
+
+        fetch.forEach(System.out::println);
+    }
+
+    @Test
+    public void caseBuilderQuery() {
+        List<Tuple> fetch = query
+                .select(member.username ,new CaseBuilder().when(member.age.between(0, 20)).then("0~20살")
+                        .when(member.age.between(21,40)).then("21~40살")
+                        .otherwise("기타"))
+                .from(member)
+                .fetch();
+
+        fetch.forEach(System.out::println);
+    }
+
+    @Test
+    public void constant() {
+        List<Tuple> a = query
+                .select(member.username, Expressions.constant("A"))
+                .from(member)
+                .fetch();
+
+        a.forEach(System.out::println);
+    }
+
+    @Test
+    public void concat() {
+        List<String> fetch = query
+                .select( member.username.prepend("_").concat("_").concat(member.age.stringValue()))
+                .from(member)
+                .fetch();
+
+        fetch.forEach(System.out::println);
+    }
+
+    @Test
+    void findDtoQueryProjection() {
+        List<MemberDto> list = query
+                .select(new QMemberDto(member.username, member.age))
+                .from(member)
+                .fetch();
+
+        list.forEach(System.out::println);
+    }
 }
