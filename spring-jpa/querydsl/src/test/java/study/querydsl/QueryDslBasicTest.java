@@ -1,6 +1,9 @@
 package study.querydsl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
@@ -290,8 +293,8 @@ public class QueryDslBasicTest {
     @Test
     public void caseBuilderQuery() {
         List<Tuple> fetch = query
-                .select(member.username ,new CaseBuilder().when(member.age.between(0, 20)).then("0~20살")
-                        .when(member.age.between(21,40)).then("21~40살")
+                .select(member.username, new CaseBuilder().when(member.age.between(0, 20)).then("0~20살")
+                        .when(member.age.between(21, 40)).then("21~40살")
                         .otherwise("기타"))
                 .from(member)
                 .fetch();
@@ -312,7 +315,7 @@ public class QueryDslBasicTest {
     @Test
     public void concat() {
         List<String> fetch = query
-                .select( member.username.prepend("_").concat("_").concat(member.age.stringValue()))
+                .select(member.username.prepend("_").concat("_").concat(member.age.stringValue()))
                 .from(member)
                 .fetch();
 
@@ -328,4 +331,97 @@ public class QueryDslBasicTest {
 
         list.forEach(System.out::println);
     }
+
+    @Test
+    void 동적쿼리_BooleanBuilder() {
+        String usernameParam = "member1";
+        Integer ageParam = null;
+
+        List<Member> result = searchMember1(usernameParam, ageParam);
+
+        result.forEach(System.out::println);
+    }
+
+    private List<Member> searchMember1(String usernameParam, Integer ageParam) {
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        if (usernameParam != null)
+            booleanBuilder.and(member.username.eq(usernameParam));
+
+        if (ageParam != null)
+            booleanBuilder.and(member.age.eq(ageParam));
+
+        return query
+                .selectFrom(member)
+                .where(booleanBuilder)
+                .fetch();
+    }
+
+    @Test
+    void 동적쿼리_whereParam() {
+        String usernameParam = null;
+        Integer ageParam = null;
+
+        List<Member> result = searchMember2(usernameParam, ageParam);
+
+        result.forEach(System.out::println);
+    }
+
+    private List<Member> searchMember2(String usernameParam, Integer ageParam) {
+        return query
+                .selectFrom(member)
+                //.where(usernameEq(usernameParam), ageEq(ageParam))
+                .where(allEq(usernameParam, ageParam))
+                .fetch();
+    }
+
+    private BooleanExpression ageEq(Integer ageParam) {
+        return ageParam == null ? null : member.age.eq(ageParam);
+    }
+
+    private BooleanExpression usernameEq(String usernameParam) {
+        return usernameParam == null ? null : member.username.eq(usernameParam);
+    }
+
+    private BooleanExpression allEq(String username, Integer age) {
+        return usernameEq(username).and(ageEq(age));
+    }
+
+    @Test
+    void 수정_삭제_배치쿼리() {
+        long count = query
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(30))
+                .execute();
+
+        System.out.println(count);
+    }
+
+    @Test
+    void 수정_삭제_배치쿼리_기존값연산() {
+        long count = query
+                .update(member)
+                .set(member.age, member.age.add(1))
+                .where(member.age.lt(30))
+                .execute();
+
+        System.out.println(count);
+    }
+
+    @Test
+    void sqlFunction() {
+        List<String> list = query
+                .select(Expressions.stringTemplate(
+                        "function('replace',{0},{1},{2})",
+                        member.username,
+                        "member",
+                        "M"
+                ))
+                .from(member)
+                .fetch();
+
+        list.forEach(System.out::println);
+    }
+
 }
