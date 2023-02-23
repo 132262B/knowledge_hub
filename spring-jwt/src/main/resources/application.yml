@@ -4,7 +4,6 @@ server:
     context-path: /
 
 spring:
-  # todo ?? ?????? ??
   datasource:
     url: jdbc:h2:mem:test
     username: sa
@@ -35,6 +34,19 @@ logging:
     org.hibernate.type: trace # ???? ??? ????? ? ? ?? ?? ??
     com.app: debug # todo ??? ??
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
 
 kakao:
   client:
+
+
+
+token:
+  secret: erjgm243ew24jgieow3fkmerg34ger== # ??? ???
+  access-token-expiration-time: 900000  # 15? 1000(ms) x 60(s) x 15(m)
+  refresh-token-expiration-time: 1209600000 # 2? 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
