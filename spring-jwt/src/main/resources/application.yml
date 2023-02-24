@@ -45,7 +45,6 @@ kakao:
   client:
 
 
-
 token:
   secret: erjgm243ew24jgieow3fkmerg34ger== # ??? ???
   access-token-expiration-time: 900000  # 15? 1000(ms) x 60(s) x 15(m)
