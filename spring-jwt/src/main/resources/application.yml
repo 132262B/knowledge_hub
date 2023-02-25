@@ -43,9 +43,15 @@ feign:
 
 kakao:
   client:
+    id: ENC(+4cnUs4GGq+Lt74kMMsqZGHQ+PRe4c5OElOMUBYqKYJS55dyjew4oMgCPJC0/Cuc)
+    secret: ENC(uKaIIeYKnLQO4b5031irS2PzCwulAuW2aLTJgI8d58gji/4nfcImTm6iFKDepzGU)
 
 
 token:
-  secret: erjgm243ew24jgieow3fkmerg34ger== # ??? ???
+  secret: ENC(DEvaQ9j/QQfEgc1kz9YAP0HjnbH5SLWDqgVTgruq+dh4pTbxXmIMU8YmMx0yOLxA)
   access-token-expiration-time: 900000  # 15? 1000(ms) x 60(s) x 15(m)
   refresh-token-expiration-time: 1209600000 # 2? 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
+
+
+jasypt:
+  password: ${password}
