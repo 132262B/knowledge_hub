@@ -52,6 +52,15 @@ class ContentServiceTest {
         em.clear();
     }
 
+    @DisplayName("단건 delete")
+    @Test
+    void deleteContent_test() {
+        contentService.deleteContent(1L);
+
+        List<Content> list = contentRepository.findAll();
+        assertThat(list.size()).isEqualTo(2);
+    }
+
     @DisplayName("deleteAllInBatch로 delete")
     @Test
     void deleteContentV0_test() {

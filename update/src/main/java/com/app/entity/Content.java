@@ -5,7 +5,6 @@ import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Entity

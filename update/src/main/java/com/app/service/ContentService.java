@@ -20,6 +20,11 @@ public class ContentService {
 
     private final MemberRepository memberRepository;
 
+    public void deleteContent(Long contentId) {
+        Content content = contentRepository.findById(contentId).get();
+        contentRepository.delete(content);
+    }
+
     public void deleteContentV0(Long memberId) {
         Member member = memberRepository.findById(memberId).get();
 
