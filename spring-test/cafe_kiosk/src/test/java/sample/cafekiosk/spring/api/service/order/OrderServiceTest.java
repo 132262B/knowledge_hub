@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import sample.cafekiosk.spring.api.service.order.response.OrderResponse;
 import sample.cafekiosk.spring.domain.product.Product;
 import sample.cafekiosk.spring.domain.product.ProductRepository;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static sample.cafekiosk.spring.domain.product.ProductSellingStatus.SELLING;
 import static sample.cafekiosk.spring.domain.product.ProductType.HANDMADE;
 
+@ActiveProfiles("test")
 @SpringBootTest
 class OrderServiceTest {
 
@@ -40,14 +42,16 @@ class OrderServiceTest {
                 .productNumbers(List.of("001", "002"))
                 .build();
 
+        LocalDateTime now = LocalDateTime.now();
+
         // when
-        OrderResponse orderResponse = orderService.createOrder(request);
+        OrderResponse orderResponse = orderService.createOrder(request, now);
 
         // then
         assertThat(orderResponse.getId()).isNotNull();
         assertThat(orderResponse)
                 .extracting("registeredDateTime", "totalPrice")
-                .contains(LocalDateTime.now(), 4000);
+                .contains(now, 4000);
         assertThat(orderResponse.getProducts()).hasSize(2)
                 .extracting("productNumber","price")
                 .containsExactlyInAnyOrder(
