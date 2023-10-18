@@ -47,11 +47,10 @@ public class Order extends BaseEntity {
         return new Order(products, registeredDateTime);
     }
 
-
-
     private int calculateTotalPrice(List<Product> products) {
         return products.stream()
                 .mapToInt(Product::getPrice)
                 .sum();
     }
+
 }
