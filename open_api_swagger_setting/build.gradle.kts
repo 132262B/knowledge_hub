@@ -26,6 +26,7 @@ dependencies {
 
     // swagger
     implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
+
 }
 
 tasks.withType<KotlinCompile> {
