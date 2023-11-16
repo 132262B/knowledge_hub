@@ -12,4 +12,16 @@ public class MailSendClient {
         throw new IllegalArgumentException("메일 전송");
     }
 
+    public void a() {
+        System.out.println("a");
+    }
+
+    public void b() {
+        System.out.println("b");
+    }
+
+    public void c() {
+        System.out.println("c");
+    }
+
 }
