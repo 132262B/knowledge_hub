@@ -16,13 +16,13 @@ class CoroutinesRestController {
 
     @GetMapping("/suspend")
     suspend fun suspendingEndpoint(): Banner {
-        delay(10000)
+        delay(3000)
         return Banner()
     }
 
     @GetMapping("/deferred")
     fun deferredEndpoint() = GlobalScope.async {
-        delay(10000)
+        delay(3000)
         Banner()
     }
 
