@@ -9,6 +9,7 @@ import app.training.service.CommentService
 import app.training.service.MemberService
 import kotlinx.coroutines.*
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.ServerResponse.async
 
@@ -18,23 +19,27 @@ class ContentUseCase(
     private val commentService : CommentService,
     private val memberService : MemberService,
 ) {
+    @Transactional(readOnly = true)
     suspend fun findMyContent(id: Long) {
         coroutineScope {
+
+            println("코루틴 시작 : ${Thread.currentThread().name}")
             val memberDto: Deferred<MemberDto> = async {
                 memberService.findMyInfo(id)
             }
 
-            val boardDto: Deferred<BoardDto> = async {
+            val boardDto: Deferred<List<BoardDto>> = async {
                 boardService.findByMemberId(id)
             }
 
-            val commentDto: Deferred<CommentDto> = async {
+            val commentDto: Deferred<List<CommentDto>> = async {
                 commentService.findByMemberId(id)
             }
 
             println(memberDto.await())
             println(boardDto.await())
             println(commentDto.await())
+            println("코루틴 종료 : ${Thread.currentThread().name}")
         }
 
     }
