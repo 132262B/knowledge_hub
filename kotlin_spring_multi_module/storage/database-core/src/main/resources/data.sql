@@ -1,0 +1,1 @@
+insert into example_entity (example_column) values ('test')
