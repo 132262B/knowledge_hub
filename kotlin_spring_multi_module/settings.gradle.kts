@@ -5,6 +5,7 @@ include(
     "boot:customer",
     "boot-api",
     "core:domain",
+    "core:constant",
     "storage:database-core",
     "support:logging",
 )

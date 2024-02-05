@@ -9,6 +9,7 @@ tasks.getByName("jar") {
 dependencies {
     implementation(project(":support:logging"))
     implementation(project(":core:domain"))
+    implementation(project(":core:constant"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")

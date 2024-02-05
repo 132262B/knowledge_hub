@@ -2,8 +2,11 @@ package app.learning.customer.usecase
 
 import app.learning.customer.mapper.OrderMapper
 import app.learning.customer.request.CreateOrderRequest
+import app.learning.customer.request.ModifyQuantityRequest
 import app.learning.customer.response.OrderResponse
+import app.learning.enumerated.OrderStatus
 import app.learning.order.OrderCreateService
+import app.learning.order.OrderModifyService
 import app.learning.order.OrderReadService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 class OrderUseCase(
     private val orderCreateService: OrderCreateService,
     private val orderReadService: OrderReadService,
+    private val orderModifyService: OrderModifyService,
 ) {
 
     @Transactional
@@ -32,5 +36,13 @@ class OrderUseCase(
         orderReadService.find().let {
             OrderMapper.orderResponseOf(it)
         }
+
+    @Transactional
+    fun modifyQuantity(orderId: Long, request: ModifyQuantityRequest) =
+        orderReadService.isStatusCheck(orderId, OrderStatus.quantityModifiable())
+            .apply {
+                orderModifyService.modifyQuantity(orderId, request.quantity)
+            }
+
 
 }
