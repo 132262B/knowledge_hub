@@ -1,4 +1,4 @@
-package app.learning.persistence
+package app.learning.customer.persistence
 
 import app.learning.ExampleService
 import io.github.oshai.kotlinlogging.KotlinLogging

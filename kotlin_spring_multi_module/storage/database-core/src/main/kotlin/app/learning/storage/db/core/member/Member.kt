@@ -1,6 +1,6 @@
 package app.learning.storage.db.core.member
 
-import app.learning.storage.db.core.base.BaseEntity
+import app.learning.storage.db.core.BaseEntity
 import jakarta.persistence.Entity
 
 @Entity

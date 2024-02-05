@@ -1,6 +1,8 @@
 rootProject.name = "learning"
 
 include(
+    "boot:admin",
+    "boot:customer",
     "boot-api",
     "core:domain",
     "storage:database-core",

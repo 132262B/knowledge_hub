@@ -1,6 +1,6 @@
 package app.learning.storage.db.core.example
 
-import app.learning.storage.db.core.base.BaseEntity
+import app.learning.storage.db.core.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 

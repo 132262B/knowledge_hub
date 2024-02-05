@@ -1,4 +1,4 @@
-package app.learning.storage.db.core.base
+package app.learning.storage.db.core
 
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
