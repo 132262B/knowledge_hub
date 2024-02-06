@@ -1,13 +1,12 @@
 rootProject.name = "learning"
 
 include(
-    "boot:admin",
-    "boot:customer",
     "boot-api",
     "core:domain",
     "core:constant",
     "storage:database-core",
     "support:logging",
+    "web",
 )
 
 pluginManagement {
