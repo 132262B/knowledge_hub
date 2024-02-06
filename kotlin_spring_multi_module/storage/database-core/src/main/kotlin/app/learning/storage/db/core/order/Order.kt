@@ -2,10 +2,7 @@ package app.learning.storage.db.core.order
 
 import app.learning.enumerated.OrderStatus
 import app.learning.storage.db.core.BaseEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "orders")
@@ -16,6 +13,10 @@ class Order(
     quantity: Int,
 
     status: OrderStatus = OrderStatus.SUBMITTED,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
 ) : BaseEntity() {
 
     var quantity: Int = quantity

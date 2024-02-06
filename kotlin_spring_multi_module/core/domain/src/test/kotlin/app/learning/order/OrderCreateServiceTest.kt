@@ -24,17 +24,18 @@ class OrderCreateServiceTest {
     fun createTest() {
         // given
         val memberId : Long = 1
-        val newOrder = NewOrder(1L, 1);
-        val savedOrder = Order(memberId = memberId, productId = newOrder.productId, quantity = newOrder.quantity)
+        val newOrder = NewOrder(1L, 1)
+        val id : Long = 1
+        val savedOrder = Order(memberId = memberId, productId = newOrder.productId, quantity = newOrder.quantity, id = id)
 
         given(orderRepository.save(any())).willReturn(savedOrder)
 
-        //when
+        // when
         val createOrder  = orderCreateService.create(memberId, newOrder)
 
         // then
         verify(orderRepository, times(1)).save(any(Order::class.java))
-        assertThat(createOrder).isEqualTo(null)
+        assertThat(id).isEqualTo(1L)
     }
 
 }

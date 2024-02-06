@@ -1,33 +1,25 @@
 package app.learning.storage.db.core.order
 
-import app.learning.TestConfiguration
 import app.learning.enumerated.OrderStatus
+import autoparams.AutoSource
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.TestPropertySource
+import org.springframework.test.annotation.Repeat
 
 
-@ContextConfiguration(classes = [TestConfiguration::class])
-@TestPropertySource("classpath:database-core-test.yml")
 @DataJpaTest
 class OrderRepositoryTest {
 
-    @Autowired
-    lateinit var orderRepository: OrderRepository
-
-    @Test
-    fun `주문번호로 주문 정보를 조회한다`() {
+    @ParameterizedTest
+    @AutoSource
+    fun `주문번호로 주문 정보를 조회한다`(memberId: Long, productId: Long, quantity: Int) {
 
         // given
-        val memberId = 1L
-        val productId = 1L
-        val quantity = 2
-
         val order = Order(memberId, productId, quantity)
         val saveOrderId = orderRepository.save(order).id !!
 
@@ -41,6 +33,9 @@ class OrderRepositoryTest {
         assertThat(findOrder.quantity).isEqualTo(quantity)
         assertThat(findOrder.status).isEqualTo(OrderStatus.SUBMITTED)
     }
+
+    @Autowired
+    lateinit var orderRepository: OrderRepository
 
     @DisplayName("없는 주문번호를 조회하는 경우, RuntimeException이 발생한다.")
     @Test

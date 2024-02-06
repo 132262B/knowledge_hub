@@ -37,6 +37,7 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("io.github.oshai:kotlin-logging-jvm:6.0.2")
+        testImplementation("io.github.autoparams:autoparams-kotlin:3.1.0")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
 
