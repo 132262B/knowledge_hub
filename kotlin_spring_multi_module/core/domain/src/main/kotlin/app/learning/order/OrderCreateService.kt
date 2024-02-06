@@ -10,13 +10,13 @@ class OrderCreateService(
     private val orderRepository: OrderRepository,
 ) {
     @Transactional
-    fun create(memberId: Long, newOrder: NewOrder): Long =
+    fun create(memberId: Long, newOrder: NewOrder): Long? =
         orderRepository.save(
             Order(
                 memberId = memberId,
                 productId = newOrder.productId,
                 quantity = newOrder.quantity,
             )
-        ).id !!
+        ).id
 
 }

@@ -15,7 +15,7 @@ class Order(
 
     quantity: Int,
 
-    status: OrderStatus = OrderStatus.SUBMITTED
+    status: OrderStatus = OrderStatus.SUBMITTED,
 ) : BaseEntity() {
 
     var quantity: Int = quantity

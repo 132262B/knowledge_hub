@@ -19,7 +19,7 @@ class OrderController(
     @PostMapping("/v1/order")
     fun create(
         @RequestBody @Valid request: CreateOrderRequest
-    ): Long = useCase.create(1, request)
+    ): Long? = useCase.create(1, request)
 
     @GetMapping("/v1/order")
     fun findList(): List<OrderResponse> = useCase.findList()

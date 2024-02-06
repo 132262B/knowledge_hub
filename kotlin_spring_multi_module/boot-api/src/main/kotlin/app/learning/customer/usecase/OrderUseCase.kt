@@ -20,7 +20,7 @@ class OrderUseCase(
 ) {
 
     @Transactional
-    fun create(memberId: Long, request: CreateOrderRequest): Long {
+    fun create(memberId: Long, request: CreateOrderRequest): Long? {
 
         val orderId = orderCreateService.create(
             memberId,
