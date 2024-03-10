@@ -20,7 +20,7 @@ class LoggingFilter : AbstractGatewayFilterFactory<LoggingFilter.LoggingConfig>(
     override fun apply(config: LoggingConfig): GatewayFilter {
         val filter = GatewayFilter { exchange, chain ->
             val uuid = UUID.randomUUID().toString()
-            MDC.put("uuid", uuid) // UUID를 MDC에 넣습니다.
+            MDC.put("uuid", uuid)
 
             val request = exchange.request
             val response = exchange.response
