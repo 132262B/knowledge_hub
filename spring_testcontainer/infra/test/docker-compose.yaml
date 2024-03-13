@@ -7,9 +7,7 @@ services:
       MYSQL_DATABASE: score
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - 3306:3306
-    volumes:
-      - ./dbdata:/var/lib/mysql
+      - 3306
   local-db-migrate:
     image: flyway/flyway:7
     restart: always
