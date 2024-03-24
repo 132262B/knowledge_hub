@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-mongodb
+  data:
+    mongodb:
+      uri: mongodb://root:1234@localhost:27017/book?authSource=admin
+
+#      host: localhost
+#      port: 27017
+#      authentication-database: admin
+#      database: book
+#      username: root
+#      password: 1234
+#      uri: mongodb://localhost:27017/book
