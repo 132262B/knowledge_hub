@@ -12,7 +12,7 @@ import java.math.BigDecimal
 class BookServiceTest {
 
     @Autowired
-    private lateinit var bookService : BookService
+    private lateinit var bookService: BookService
 
     @Test
     fun createTest() {
@@ -22,7 +22,7 @@ class BookServiceTest {
 
         val bookPrices = setOf(
             BookPrice(BookPriceType.E_BOOK, BigDecimal("38700")),
-            BookPrice(BookPriceType.E_BOOK, BigDecimal("30960"))
+            BookPrice(BookPriceType.PAPER_BOOK, BigDecimal("30960"))
         )
 
         // when
@@ -31,6 +31,25 @@ class BookServiceTest {
         // then
         assertThat(book.name).isEqualTo(name)
         assertThat(book.author).isEqualTo(author)
+
+        println(book.id)
+    }
+
+    @Test
+    fun modifyTest() {
+        // given
+        val id = "66018b819b2d7b3f73220e97"
+        val name = "베스트! 자바 ORM 표준 JPA 프로그래밍"
+        val author = "킹영환"
+
+        val bookPrices = setOf(
+            BookPrice(BookPriceType.E_BOOK, BigDecimal("38700")),
+            BookPrice(BookPriceType.PAPER_BOOK, BigDecimal("30960")),
+            BookPrice(BookPriceType.ORIGINAL, BigDecimal("40000"))
+        )
+
+        // when
+        bookService.modify(id, name, author, bookPrices)
 
     }
 }

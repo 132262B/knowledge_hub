@@ -10,6 +10,7 @@ open class Book(
     author: String,
     bookPrice: Set<BookPrice>
 ) {
+
     @Id
     var id: String? = null
         protected set
@@ -22,5 +23,11 @@ open class Book(
 
     var bookPrice = bookPrice
         protected set
+
+    fun modify(name: String, author: String, bookPrice: Set<BookPrice>) {
+        this.name = name
+        this.author = author
+        this.bookPrice = bookPrice
+    }
 
 }
