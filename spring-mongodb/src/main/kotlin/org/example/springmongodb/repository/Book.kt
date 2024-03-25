@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 open class Book(
     name: String,
     author: String,
+    bookPrice: Set<BookPrice>
 ) {
     @Id
     var id: String? = null
@@ -19,5 +20,7 @@ open class Book(
     var author = author
         protected set
 
+    var bookPrice = bookPrice
+        protected set
 
 }
