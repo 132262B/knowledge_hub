@@ -52,4 +52,15 @@ class BookServiceTest {
         bookService.modify(id, name, author, bookPrices)
 
     }
+
+    @Test
+    fun modify2Test() {
+        // given
+        val id = "66042346dc834a0c0f8e3b2b"
+        val bigDecimal = BigDecimal("24231.00")
+
+        // when
+        bookService.modify2(id,bigDecimal)
+
+    }
 }

@@ -2,6 +2,7 @@ package org.example.springmongodb.repository
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.math.BigDecimal
 
 
 @Document(collection = "book")
@@ -22,6 +23,9 @@ open class Book(
         protected set
 
     var bookPrice = bookPrice
+        protected set
+
+    var toDayPrices : MutableList<BigDecimal> = mutableListOf()
         protected set
 
     fun modify(name: String, author: String, bookPrice: Set<BookPrice>) {
