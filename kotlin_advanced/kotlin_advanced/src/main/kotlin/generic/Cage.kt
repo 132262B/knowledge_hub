@@ -93,7 +93,7 @@ class Cage5<T>(
 
     fun printAfterSort() {
         this.animals.sorted()
-            .map { println(it) }
+            .map { it.name }
             .let { println(it) }
     }
 
