@@ -42,3 +42,25 @@ class Person4 {
     val maskingName : String
         get() = name[0] + (1 until name.length).joinToString("") { "*" }
 }
+
+
+class Person5 {
+    private val delegateProperty = LazyInitProperty {
+        Thread.sleep(2_000L)
+        "김수한무"
+    }
+
+    val name : String
+        get() = delegateProperty.value
+}
+
+class LazyInitProperty<T>(val init : () -> T) {
+    private var _value : T? = null
+    val value: T
+        get() {
+            if (_value == null) {
+                _value = init()
+            }
+            return _value!!
+        }
+}
