@@ -17,11 +17,9 @@ fun main() {
 
     val cage5 = Cage5(mutableListOf(Eagle(), Sparrow()))
     cage5.printAfterSort()
-
 }
 
 class Cage {
-
     private val animals: MutableList<Animal> = mutableListOf()
 
     fun getFirst(): Animal {
@@ -37,9 +35,7 @@ class Cage {
     }
 }
 
-
 class Cage2<T> {
-
     private val animals: MutableList<T> = mutableListOf()
 
     fun getFirst(): T {
@@ -61,7 +57,6 @@ class Cage2<T> {
 }
 
 class Cage3<out T> {
-
     private val animals: MutableList<T> = mutableListOf()
 
     fun getFirst(): T {
@@ -73,9 +68,7 @@ class Cage3<out T> {
     }
 }
 
-
 class Cage4<in T> {
-
     private val animals: MutableList<T> = mutableListOf()
 
     fun put(animal: T) {
@@ -88,9 +81,8 @@ class Cage4<in T> {
 }
 
 class Cage5<T>(
-    private val animals: MutableList<T> = mutableListOf()
+    private val animals: MutableList<T> = mutableListOf(),
 ) where T : Animal, T : Comparable<T> {
-
     fun printAfterSort() {
         this.animals.sorted()
             .map { it.name }

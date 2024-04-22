@@ -1,12 +1,9 @@
 package delegate
 
-import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-
 class PersonTest2 {
-
     @Test
     fun lateinitTest() {
         // given
@@ -16,5 +13,4 @@ class PersonTest2 {
         assertThatThrownBy { person.isKim }
             .isInstanceOf(UninitializedPropertyAccessException::class.java)
     }
-
 }

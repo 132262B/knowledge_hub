@@ -1,12 +1,9 @@
 package delegate
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
-
 class PersonTest4 {
-
     @Test
     fun isKimTest() {
         // given
@@ -14,7 +11,5 @@ class PersonTest4 {
 
         // when & then
         assertThat(person.isKim).isTrue()
-
     }
-
 }
