@@ -1,9 +1,13 @@
 package delegate
 
+import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
 fun main() {
-    val person = Person("권준호")
+    // val person = Person("권준호")
+
+    val p = Person6()
+    p.age = 30
 }
 
 class Person(
@@ -58,7 +62,7 @@ class LazyInitProperty<T>(val init: () -> T) {
             if (_value == null) {
                 _value = init()
             }
-            return _value!!
+            return _value !!
         }
 
     operator fun getValue(
@@ -67,4 +71,22 @@ class LazyInitProperty<T>(val init: () -> T) {
     ): T {
         return value
     }
+}
+
+class Person6 {
+    var age: Int by Delegates.observable(20) { property, oldValue, newValue ->
+        println("oldValue: $oldValue, newValue: $newValue")
+    }
+}
+
+class Person7 {
+    @Deprecated("age를 사용하세요!", ReplaceWith("age"))
+    var num : Int = 0
+
+    var age: Int by this::num
+}
+
+class Person8(map : Map<String, Any>) {
+    val name : String by map
+    val age: Int by map
 }
