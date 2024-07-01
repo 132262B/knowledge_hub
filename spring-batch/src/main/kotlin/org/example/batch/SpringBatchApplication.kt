@@ -10,6 +10,5 @@ import kotlin.system.exitProcess
 class SpringBatchApplication
 
 fun main(args: Array<String>) {
-    val runApplication = runApplication<SpringBatchApplication>(*args)
-    exitProcess(SpringApplication.exit(runApplication))
+    runApplication<SpringBatchApplication>(*args)
 }
