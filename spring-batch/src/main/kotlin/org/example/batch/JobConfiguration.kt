@@ -14,42 +14,44 @@ import org.springframework.transaction.PlatformTransactionManager
 
 
 @Configuration
-class HelloJobConfiguration {
+class JobConfiguration {
 
 
     @Bean
-    fun helloJob(
+    fun simpleJob(
         jobRepository: JobRepository,
         transactionManager: PlatformTransactionManager
     ): Job {
-        return JobBuilder( "helloJob", jobRepository)
-            .start(testStep1(jobRepository, transactionManager))
-            .next(testStep2(jobRepository, transactionManager))
+        return JobBuilder("simpleJob", jobRepository)
+            .start(simpleStep1(jobRepository, transactionManager))
+            .next(simpleStep2(jobRepository, transactionManager))
             .build()
     }
 
     @Bean
-    fun testStep1(
+    fun simpleStep1(
         jobRepository: JobRepository,
         transactionManager: PlatformTransactionManager
     ): Step {
-        return StepBuilder("testStep", jobRepository)
+        return StepBuilder("simpleStep1", jobRepository)
             .tasklet({ contribution: StepContribution, chunkContext: ChunkContext ->
-                println("testStep1 started")
+                println("step1 was executed")
                 RepeatStatus.FINISHED
-            }, transactionManager).build()
+            }, transactionManager)
+            .build()
     }
 
     @Bean
-    fun testStep2(
+    fun simpleStep2(
         jobRepository: JobRepository,
         transactionManager: PlatformTransactionManager
     ): Step {
-        return StepBuilder("testStep", jobRepository)
+        return StepBuilder("simpleStep2", jobRepository)
             .tasklet({ contribution: StepContribution, chunkContext: ChunkContext ->
-                println("testStep2 started")
+                println("step2 was executed")
                 RepeatStatus.FINISHED
-            }, transactionManager).build()
+            }, transactionManager)
+            .build()
     }
 
 }

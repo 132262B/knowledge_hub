@@ -12,5 +12,5 @@ spring:
   batch:
     jdbc:
       initialize-schema: never
-#    job:
-#      names: ${job.names:NONE}
+    job:
+      name: simpleJob
