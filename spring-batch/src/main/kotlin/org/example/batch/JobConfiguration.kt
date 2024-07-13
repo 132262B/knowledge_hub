@@ -35,7 +35,10 @@ class JobConfiguration {
     ): Step {
         return StepBuilder("simpleStep1", jobRepository)
             .tasklet({ contribution: StepContribution, chunkContext: ChunkContext ->
-                println("step1 was executed")
+                val contributionParam = contribution.stepExecution.jobParameters.getString("jobParameter")
+                println(contributionParam)
+                val chunkContextParam = chunkContext.stepContext.jobParameters
+                println(chunkContextParam.toString())
                 RepeatStatus.FINISHED
             }, transactionManager)
             .build()

@@ -17,7 +17,7 @@ class JobRunner(
     override fun run(args: ApplicationArguments) {
 
         val jobParameters = JobParametersBuilder()
-            .addString("jobParameter", "jobParameter2")
+            .addString("jobParameter", "값 들어옴ㅋㅋㅋ")
             .toJobParameters()
 
         jobLauncher.run(simpleJob, jobParameters)
