@@ -15,7 +15,9 @@ function App() {
         <>
             <Button {...buttonProps} />
             <Button text={"카페"} />
-            <Button text={"블로그"} >
+            <Button
+                on
+                text={"블로그"} >
                 <div>자식요소</div>
             </Button>
         </>
