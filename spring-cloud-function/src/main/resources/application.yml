@@ -2,9 +2,3 @@ spring:
   cloud:
     function:
       definition: uppercase
-  main:
-    banner-mode: off
-
-logging:
-  level:
-    root: info
