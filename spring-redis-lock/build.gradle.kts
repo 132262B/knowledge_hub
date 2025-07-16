@@ -27,6 +27,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     runtimeOnly("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
 
     // redisson
     // https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter
