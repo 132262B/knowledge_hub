@@ -1,0 +1,1 @@
+insert into coupon (id, name, quantity) values (default, '테스트 쿠폰', 100);

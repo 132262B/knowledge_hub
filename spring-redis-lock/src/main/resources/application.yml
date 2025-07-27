@@ -25,7 +25,7 @@ spring:
     open-in-view: false
   sql:
     init:
-      mode: never
+      mode: always
 
 
 
