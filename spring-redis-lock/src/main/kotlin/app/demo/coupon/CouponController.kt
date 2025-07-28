@@ -10,6 +10,6 @@ class CouponController(
 ) {
 
     @PatchMapping("/api/v1/coupons/{couponId}/issue")
-    fun issueCoupon(@PathVariable couponId: Long) = couponService.issueCoupon(couponId)
+    fun issueCoupon(@PathVariable couponId: Long): Int = couponService.issueCoupon(couponId)
 
 }
