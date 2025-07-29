@@ -10,16 +10,11 @@ class CouponService(
 ) {
 
     @DistributedLock(key = "'issueCoupon_' + #couponId")
-    fun issueCoupon(couponId: Long): Int {
+    fun issuance(couponId: Long): Int {
         val coupon = couponRepository
             .findByIdOrNull(couponId) ?: throw RuntimeException("coupon not found")
 
-        coupon.issueCoupon()
-
-        if(coupon.quantity <= -1) {
-            throw RuntimeException("coupon quantity is greater than zero")
-        }
-
+        coupon.issuance()
         return coupon.quantity
     }
 }

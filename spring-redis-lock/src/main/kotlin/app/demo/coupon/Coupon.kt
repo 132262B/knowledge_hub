@@ -14,8 +14,15 @@ class Coupon(
     val id : Long,
 ) {
 
-    fun issueCoupon() {
+    fun issuance() {
+        validateQuantity()
         this.quantity =  this.quantity - 1
+    }
+
+    private fun validateQuantity() {
+        if(quantity < 1) {
+            throw RuntimeException("coupon quantity is greater than zero")
+        }
     }
 
 }
