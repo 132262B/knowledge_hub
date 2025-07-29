@@ -11,7 +11,7 @@ class Coupon(
     var quantity : Int,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Long,
+    val id : Long = 0,
 ) {
 
     fun issuance() {
