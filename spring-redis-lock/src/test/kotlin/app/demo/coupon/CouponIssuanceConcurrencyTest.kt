@@ -53,6 +53,52 @@ class CouponIssuanceConcurrencyTest {
         println("잔여 쿠폰 개수 = ${persistCoupon.quantity}")
     }
 
+    @Test
+    fun `쿠폰차감 100명 테스트 (Synchronized 적용)`() {
+        val latch = CountDownLatch(numberOfThreads)
+
+        repeat(numberOfThreads) {
+            executorService.submit {
+                try {
+                    couponDecreaseService.issuanceSynchronized(coupon.id)
+                } finally {
+                    latch.countDown()
+                }
+            }
+        }
+
+        latch.await()
+
+        val persistCoupon = couponRepository.findById(coupon.id)
+            .orElseThrow { IllegalArgumentException("쿠폰 없음") }
+
+        assertThat(persistCoupon.quantity).isZero()
+        println("잔여 쿠폰 개수 = ${persistCoupon.quantity}")
+    }
+
+
+    @Test
+    fun `쿠폰차감 100명 테스트 (Isolation SERIALIZABLE 적용)`() {
+        val latch = CountDownLatch(numberOfThreads)
+
+        repeat(numberOfThreads) {
+            executorService.submit {
+                try {
+                    couponDecreaseService.issuanceSerializable(coupon.id)
+                } finally {
+                    latch.countDown()
+                }
+            }
+        }
+
+        latch.await()
+
+        val persistCoupon = couponRepository.findById(coupon.id)
+            .orElseThrow { IllegalArgumentException("쿠폰 없음") }
+
+        assertThat(persistCoupon.quantity).isZero()
+        println("잔여 쿠폰 개수 = ${persistCoupon.quantity}")
+    }
 
     @Test
     fun `쿠폰차감 분산락 미적용 동시성 100명 테스트`() {
